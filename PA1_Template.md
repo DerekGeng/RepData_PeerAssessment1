@@ -29,7 +29,7 @@ What is mean total number of steps taken per day?
          ylab = "Frequency",
          cex.axis=1,cex.lab = 1)
 
-![](PA1_Template_files/figure-markdown_strict/unnamed-chunk-1-1.png)
+![plot of unnamed-chunk-1-1](figures/unnamed-chunk-1-1.png) 
 
     StepsMean <- mean(StepsTotal$steps)
     StepsMedian <- median(StepsTotal$steps)
