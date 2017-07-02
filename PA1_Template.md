@@ -29,7 +29,7 @@ What is mean total number of steps taken per day?
          ylab = "Frequency",
          cex.axis=1,cex.lab = 1)
 
-![](PA1_Template_files/figure-markdown_strict/unnamed-chunk-1-1.png)
+![plot of  unnamed-chunk-1-1](figures/unnamed-chunk-1-1.png)
 
     StepsMean <- mean(StepsTotal$steps)
     StepsMean
@@ -55,8 +55,8 @@ What is the average daily activity pattern?
          ylab = "Average number of steps", 
          main = "Average Daily Activity Pattern", 
          col = "orange")
-
-![](PA1_Template_files/figure-markdown_strict/unnamed-chunk-2-1.png)
+         
+![plot of  unnamed-chunk-2-1](figures/unnamed-chunk-2-1.png)
 
     maxStepsInterval <- StepsInterval[which.max(StepsInterval$steps),"interval"]
     maxStepsInterval
@@ -98,7 +98,7 @@ Imputing missing values
          ylab = "Frequency",
          main = "Histogram of Total Steps per day")
 
-![](PA1_Template_files/figure-markdown_strict/unnamed-chunk-3-1.png)
+![plot of  unnamed-chunk-3-1](figures/unnamed-chunk-3-1.png)
 
     StepsMeanNew <- mean(StepsTotalNew$steps)
     StepsMeanNew
@@ -130,4 +130,4 @@ Are there differences in activity patterns between weekdays and weekends?
            aspect = 1/2, 
            type = "l")
 
-![](PA1_Template_files/figure-markdown_strict/unnamed-chunk-4-1.png)
+![plot of  unnamed-chunk-4-1](figures/unnamed-chunk-4-1.png)
