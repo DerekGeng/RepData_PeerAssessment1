@@ -8,6 +8,7 @@ output:
 
 ## Loading and preprocessing the data
 unzip("repdata%2Fdata%2Factivity.zip")
+
 activitydata <- read.csv("activity.csv", sep = ",")
 
 
