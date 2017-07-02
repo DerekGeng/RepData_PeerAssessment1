@@ -1,16 +1,15 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
+title: "PA1_Template"
+author: "Derek Geng"
+date: "2 juli 2017"
+output: html_document
 ---
 
-
 ## Loading and preprocessing the data
+```{r loaddata}
 unzip("repdata%2Fdata%2Factivity.zip")
-
 activitydata <- read.csv("activity.csv", sep = ",")
-
+```
 
 ## What is mean total number of steps taken per day?
 
