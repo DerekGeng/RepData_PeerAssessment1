@@ -1,0 +1,120 @@
+---
+title: "PA1_Template"
+author: "Derek Geng"
+date: "2 juli 2017"
+output: md_document
+---
+
+## Loading and preprocessing the data
+```{r loaddata}
+setwd("D:/Downloads/")
+unzip("repdata%2Fdata%2Factivity.zip")
+activitydata <- read.csv("activity.csv", sep = ",")
+```
+## What is mean total number of steps taken per day?
+```{r}
+head(activitydata)
+StepsTotal <- aggregate(steps ~ date, 
+                        data = activitydata, 
+                        sum, na.rm = TRUE)
+
+hist(StepsTotal$steps,
+     col="orange",
+     main="Histogram of Total Steps per day",
+     xlab="Steps per day",
+     ylab = "Frequency",
+     cex.axis=1,cex.lab = 1)
+     
+StepsMean <- mean(StepsTotal$steps)
+StepsMean
+StepsMedian <- median(StepsTotal$steps)
+StepsMedian
+```
+
+
+## What is the average daily activity pattern?
+```{r}
+StepsInterval <- aggregate(steps ~ interval, 
+                            data = activitydata, 
+                            mean, na.rm = TRUE)
+
+plot(steps ~ interval, 
+     data = StepsInterval, 
+     type = "l", 
+     xlab = "Interval",
+     ylab = "Average number of steps", 
+     main = "Average Daily Activity Pattern", 
+     col = "orange")
+     
+maxStepsInterval <- StepsInterval[which.max(StepsInterval$steps),"interval"]
+maxStepsInterval
+```
+
+
+
+## Imputing missing values
+```{r}
+missing <- sum(is.na(activitydata$steps))
+
+activitydataNew <-activitydata
+
+StepsAverage <- aggregate(steps ~ interval, 
+                          data = activitydataNew, 
+                          mean)
+
+fillNA <- numeric()
+for (i in 1:nrow(activitydataNew)) {
+        obs <- activitydataNew[i, ]
+        
+        if (is.na(obs$steps)) {
+                steps <- subset(StepsAverage, interval == obs$interval)$steps
+        } else {
+                steps <- obs$steps
+        }
+        fillNA <- c(fillNA, steps)
+        
+}
+
+activitydataNew$steps<- fillNA
+
+StepsTotalNew <- aggregate(steps ~ date, 
+                             data = activitydataNew, 
+                             sum, 
+                             na.rm = TRUE)
+hist(StepsTotalNew$steps, col = "blue", 
+     xlab = "Number of Steps", 
+     ylab = "Frequency",
+     main = "Histogram of Total Steps per day")
+
+StepsMeanNew <- mean(StepsTotalNew$steps)
+StepsMeanNew
+StepsMedianNew <- median(StepsTotalNew$steps)
+StepsMedianNew
+
+```
+
+
+
+
+## Are there differences in activity patterns between weekdays and weekends?
+```{r}
+activitydataNew$day <- ifelse(as.POSIXlt(as.Date(activitydataNew$date))$wday%%6 == 
+                                        0, "weekend", "weekday")
+activitydataNew$day <- factor(activitydataNew$day, levels = c("weekday", "weekend"))
+
+
+activitydataNew2<- aggregate(steps ~ interval + day, 
+                          data = activitydataNew,
+                          mean)
+
+library(lattice)
+xyplot(steps ~ interval | factor(day), data = activitydataNew2,
+       main="Average Steps (Weekend V.S. Weekday)",
+       xlab="Interval", 
+       ylab="Number of Steps",
+       aspect = 1/2, 
+       type = "l")
+
+
+
+```
